@@ -1,5 +1,5 @@
 # Usa a imagem oficial do OpenJDK 17
-FROM openjdk:17-jre-slim
+FROM eclipse-temurin:17-jdk
 
 # Define o diretório de trabalho dentro do container
 WORKDIR /dslistSpring
