@@ -1,14 +1,11 @@
-# Usa a imagem oficial do OpenJDK 17
+# Etapa de build
+FROM eclipse-temurin:17-jdk AS build
+WORKDIR /app
+COPY . .
+RUN ./mvnw clean package -DskipTests
+
+# Etapa final
 FROM eclipse-temurin:17-jdk
-
-# Define o diretório de trabalho dentro do container
-WORKDIR /dslistSpring
-
-# Copia o arquivo JAR gerado pelo Maven/Gradle para dentro do container
-COPY target/*.jar app.jar
-
-# Expõe a porta padrão do Spring Boot (se necessário)
-EXPOSE 8080
-
-# Comando para executar a aplicação
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 CMD ["java", "-jar", "app.jar"]
